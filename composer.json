@@ -1,0 +1,31 @@
+{
+  "name": "owlnext/notification-api-php-sdk",
+  "description": "Owlnext's Notification PHP Library",
+  "keywords": [
+    "owlnext",
+    "notification",
+    "api"
+  ],
+  "homepage": "https://owlnext.fr",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Owlnext",
+      "homepage": "https://github.com/owlnext-fr"
+    }
+  ],
+  "require": {
+    "php": ">=8.1",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "symfony/http-client": "^6.2",
+    "symfony/serializer": "^6.2",
+    "symfony/property-access": "^6.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Owlnext\\NotificationAPI\\": ""
+    }
+  }
+}

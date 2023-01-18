@@ -1,0 +1,6 @@
+config
+.env
+.env.*
+vendor
+tests
+.idea
