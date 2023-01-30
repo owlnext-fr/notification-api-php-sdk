@@ -2,6 +2,7 @@
 
 namespace Owlnext\NotificationAPI\api;
 
+use Owlnext\NotificationAPI\bean\Attachment\AttachmentDetails;
 use Owlnext\NotificationAPI\utils\ListIterator;
 
 class AttachmentEndpoint extends Impl\AbstractEndpoint
@@ -12,12 +13,12 @@ class AttachmentEndpoint extends Impl\AbstractEndpoint
         return parent::all($params);
     }
 
-    public function get(string $id): mixed
+    public function get(string $id): AttachmentDetails
     {
         return parent::get($id);
     }
 
-    public function create(array $payload): mixed
+    public function create(array $payload): AttachmentDetails
     {
         return parent::create($payload);
     }
