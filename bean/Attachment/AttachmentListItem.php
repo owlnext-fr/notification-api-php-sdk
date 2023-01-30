@@ -2,6 +2,8 @@
 
 namespace Owlnext\NotificationAPI\bean\Attachment;
 
+use DateTime;
+
 class AttachmentListItem
 {
     public int $id;
@@ -10,4 +12,6 @@ class AttachmentListItem
     public string $content;
     public int $sequenceNumber;
     public string $type;
+    public DateTime $createdAt;
+
 }

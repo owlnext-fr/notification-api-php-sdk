@@ -24,5 +24,7 @@ final class Routes
     public final const ATTACHMENT_LIST = '/api/attachments';
 
     public final const ATTACHMENT_DETAILS = '/api/attachments/{id}';
+    public final const TRANSPORT_LIST = '/api/transports';
+    public final const TRANSPORT_DETAILS = '/api/transports/{id}';
 
 }

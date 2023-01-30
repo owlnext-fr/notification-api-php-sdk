@@ -7,6 +7,7 @@ use Owlnext\NotificationAPI\api\AttachmentEndpoint;
 use Owlnext\NotificationAPI\api\AuthenticationEndpoint;
 use Owlnext\NotificationAPI\api\ContactEndpoint;
 use Owlnext\NotificationAPI\api\TestEndpoint;
+use Owlnext\NotificationAPI\api\TransportEndpoint;
 use Owlnext\NotificationAPI\client\Client;
 use Owlnext\NotificationAPI\Exception\ConfigurationException;
 use Owlnext\NotificationAPI\Exception\HttpException;
@@ -41,11 +42,14 @@ class API
 
     public AttachmentEndpoint $attachments;
 
+    public TransportEndpoint $transports;
+
     public function __construct(
         string|null $login = null,
         string|null $password = null,
-        string $environment = Environment::PRODUCTION
-    ) {
+        string      $environment = Environment::PRODUCTION
+    )
+    {
         $this->baseURL = $environment;
 
         $login = $login ?? $_ENV['OWLNEXT_NOTIFICATION_API_LOGIN'];
@@ -75,6 +79,7 @@ class API
         $this->contacts = new ContactEndpoint($this, $serializer);
         $this->appointments = new AppointmentEndpoint($this, $serializer);
         $this->attachments = new AttachmentEndpoint($this, $serializer);
+        $this->transports = new TransportEndpoint($this, $serializer);
     }
 
     public function getLogin(): string
@@ -105,9 +110,10 @@ class API
     public function request(
         string $method,
         string $path,
-        array $queryParams = [],
-        array $body = []
-    ): string {
+        array  $queryParams = [],
+        array  $body = []
+    ): string
+    {
         $headers = [];
 
         if (false === $this->router->isAuthRoute($path) && false === $this->router->isPublicRoute($path)) {
@@ -121,6 +127,9 @@ class API
 
             $headers['Authorization'] = sprintf("Bearer %s", $this->jwt->token);
         }
+
+        //var_dump($method, $path, $queryParams, $body, $headers);
+        //ob_flush();
 
         $response = $this->client->executeRequest(
             $method,
@@ -138,6 +147,9 @@ class API
             $statusCode = $response->getStatusCode();
             throw new HttpException($response->getContent(false), $statusCode);
         }
+
+        //var_dump(json_decode($response->getContent(false), true));
+        //ob_flush();
 
         return $response->getContent();
     }

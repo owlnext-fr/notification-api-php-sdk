@@ -21,4 +21,10 @@ class AbstractTestCase extends TestCase
         self::$api = null;
     }
 
+    public static function dump(mixed $value): void
+    {
+        var_dump($value);
+        ob_flush();
+    }
+
 }
