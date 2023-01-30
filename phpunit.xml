@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="vendor/autoload.php"
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false">
+
+    <testsuites>
+        <testsuite name="Project Test Suite">
+            <file>tests/PingTest.php</file>
+            <file>tests/ContactTest.php</file>
+            <file>tests/AppointmentTest.php</file>
+        </testsuite>
+    </testsuites>
+
+</phpunit>

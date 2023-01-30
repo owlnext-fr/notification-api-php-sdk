@@ -8,8 +8,6 @@ use Owlnext\NotificationAPI\utils\ListIterator;
 
 class ContactEndpoint extends AbstractEndpoint
 {
-    protected string $ressourceListPath = '/api/contacts';
-    protected string $ressourceDetailsPath = '/api/contacts/{id}';
 
     public function all(array $params = []): ListIterator
     {
@@ -24,6 +22,16 @@ class ContactEndpoint extends AbstractEndpoint
     public function delete(string $id): bool
     {
         return parent::delete($id);
+    }
+
+    public function create(array $payload): ContactDetails
+    {
+        return parent::create($payload);
+    }
+
+    public function update(string $id, array $payload): ContactDetails
+    {
+        return parent::update($id, $payload);
     }
 
 }

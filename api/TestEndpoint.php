@@ -2,32 +2,28 @@
 
 namespace Owlnext\NotificationAPI\api;
 
-use Owlnext\NotificationAPI\API;
+use Owlnext\NotificationAPI\api\Impl\AbstractEndpoint;
 use Owlnext\NotificationAPI\client\Method;
-use Owlnext\NotificationAPI\utils\Serializer;
 
-class TestEndpoint
+class TestEndpoint extends AbstractEndpoint
 {
-    private static string $pingPath = "/api/docs.html";
-    private static string $pingSecuredPath = "/api/users";
 
-    private API $api;
-    private Serializer $serializer;
-
-    public function __construct(API $api, Serializer $serializer)
+    public function ping(): bool
     {
-        $this->api = $api;
-        $this->serializer = $serializer;
-    }
+        $path = $this->api->getRouter()->generateByName('test_ping');
 
-    public function ping(): bool {
-        $this->api->request(Method::GET, self::$pingPath);
+        $this->api->request(Method::GET, $path);
 
         return true;
     }
 
-    public function pingSecured(): bool {
-        $this->api->request(Method::GET, self::$pingSecuredPath);
+    public function pingSecured(): bool
+    {
+        $path = $this->api->getRouter()->generateByName('test_ping_connected');
+
+        $this->api->request(Method::GET, $path);
+
         return true;
     }
+
 }

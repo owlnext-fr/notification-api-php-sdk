@@ -2,22 +2,33 @@
 
 namespace Owlnext\NotificationAPI\utils;
 
+use Iterator;
 use Owlnext\NotificationAPI\API;
 use Owlnext\NotificationAPI\client\Method;
 
-class ListIterator implements \Iterator
+class ListIterator implements Iterator
 {
+
     private array $container;
+
     private string $path;
+
     private string $destObjectType;
+
     private array $parameters;
+
     private API $api;
+
     private Serializer $serializer;
+
+    private mixed $serializingFunction = null;
 
     private int $currentCursor;
 
     private bool $flagLastRequestNotFull = false;
+
     private bool $flagFixedPage = false;
+
     private int $flagOrigPage = 0;
 
     public function __construct(
@@ -25,18 +36,19 @@ class ListIterator implements \Iterator
         Serializer $serializer,
         string $path,
         array $parameters,
-        string $destObjectType
-    )
-    {
+        string $destObjectType,
+        null|callable $serializingFunction = null
+    ) {
         $this->container = [];
         $this->path = $path;
         $this->parameters = $parameters;
         $this->destObjectType = $destObjectType;
         $this->api = $api;
         $this->serializer = $serializer;
+        $this->serializingFunction = $serializingFunction;
         $this->rewind();
 
-        if(false === is_null($parameters['page'])) {
+        if (false === is_null($parameters['page'])) {
             $this->flagFixedPage = true;
             $this->flagOrigPage = $parameters['page'];
             $this->parameters['page'] = $parameters['page'] - 1;
@@ -44,42 +56,37 @@ class ListIterator implements \Iterator
             $this->parameters['page'] = 0;
         }
 
-        if(true === is_null($parameters['itemsPerPage'])) {
+        if (true === is_null($parameters['itemsPerPage'])) {
             $this->parameters['itemsPerPage'] = 25;
         }
     }
 
     public function current(): mixed
     {
-        var_dump(__METHOD__);
         return $this->container[$this->currentCursor];
     }
 
     public function next(): void
     {
-        var_dump(__METHOD__);
         $this->currentCursor += 1;
     }
 
     public function key(): int
     {
-        var_dump(__METHOD__);
         return $this->currentCursor;
     }
 
     public function valid(): bool
     {
-        var_dump(__METHOD__);
-
         $nextElemKey = $this->currentCursor;
 
-        if($nextElemKey >= sizeof($this->container) || $nextElemKey === 0) {
-            if(true === $this->flagLastRequestNotFull) {
+        if ($nextElemKey >= sizeof($this->container) || $nextElemKey === 0) {
+            if (true === $this->flagLastRequestNotFull) {
                 return false;
             }
 
             $this->parameters['page'] += 1;
-            if(true === $this->flagFixedPage && $this->parameters['page'] > $this->flagOrigPage) {
+            if (true === $this->flagFixedPage && $this->parameters['page'] > $this->flagOrigPage) {
                 return false;
             }
 
@@ -88,25 +95,24 @@ class ListIterator implements \Iterator
             $responseAsArray = json_decode($response, true);
 
             $arrayToLoop = $responseAsArray;
-            if(true === $this->api->isHydraUsed()) {
+            if (true === $this->api->isHydraUsed()) {
                 $arrayToLoop = $responseAsArray["hydra:member"];
             }
 
-            if(sizeof($arrayToLoop) === 0) {
+            if (sizeof($arrayToLoop) === 0) {
                 return false;
             }
 
-            if(sizeof($arrayToLoop) < $this->parameters['itemsPerPage']) {
+            if (sizeof($arrayToLoop) < $this->parameters['itemsPerPage']) {
                 $this->flagLastRequestNotFull = true;
             }
 
-            foreach ($arrayToLoop as $responseObjArray) {
-                $objJsonString = json_encode($responseObjArray);
-
-                $obj = $this->serializer->deserialize($objJsonString, $this->destObjectType);
-
-                $this->container[] = $obj;
+            foreach ($arrayToLoop as $objectArray) {
+                $this->container[] = true === is_null($this->serializingFunction) ?
+                    $this->serialize($this->serializer, $objectArray, $this->destObjectType) :
+                    ($this->serializingFunction)($this->serializer, $objectArray, $this->destObjectType);
             }
+
         }
 
         return true;
@@ -114,9 +120,12 @@ class ListIterator implements \Iterator
 
     public function rewind(): void
     {
-        var_dump(__METHOD__);
-
         $this->currentCursor = 0;
+    }
+
+    private function serialize(Serializer $serializer, array $arrayToDeserialize, string $destinationObjectType): mixed
+    {
+        return $serializer->deserialize(json_encode($arrayToDeserialize), $destinationObjectType);
     }
 
 }

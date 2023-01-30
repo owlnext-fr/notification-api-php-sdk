@@ -26,6 +26,13 @@
   "autoload": {
     "psr-4": {
       "Owlnext\\NotificationAPI\\": ""
-    }
+    },
+    "classmap": [
+      "./"
+    ]
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5",
+    "symfony/dotenv": "^6.2"
   }
 }
