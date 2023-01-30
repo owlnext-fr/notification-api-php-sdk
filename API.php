@@ -3,6 +3,7 @@
 namespace Owlnext\NotificationAPI;
 
 use Owlnext\NotificationAPI\api\AppointmentEndpoint;
+use Owlnext\NotificationAPI\api\AttachmentEndpoint;
 use Owlnext\NotificationAPI\api\AuthenticationEndpoint;
 use Owlnext\NotificationAPI\api\ContactEndpoint;
 use Owlnext\NotificationAPI\api\TestEndpoint;
@@ -38,6 +39,8 @@ class API
 
     public AppointmentEndpoint $appointments;
 
+    public AttachmentEndpoint $attachments;
+
     public function __construct(
         string|null $login = null,
         string|null $password = null,
@@ -71,6 +74,7 @@ class API
         $this->test = new TestEndpoint($this, $serializer);
         $this->contacts = new ContactEndpoint($this, $serializer);
         $this->appointments = new AppointmentEndpoint($this, $serializer);
+        $this->attachments = new AttachmentEndpoint($this, $serializer);
     }
 
     public function getLogin(): string

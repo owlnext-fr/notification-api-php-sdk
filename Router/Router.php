@@ -48,7 +48,7 @@ class Router
     public function generateByName(string $routeName, array $params = []): string
     {
         if (false === array_key_exists($routeName, $this->routes)) {
-            throw new RouterException("Route not found: %s", $routeName);
+            throw new RouterException(sprintf("Route not found: %s", $routeName));
         }
 
         return $this->generate($this->routes[$routeName], $params);

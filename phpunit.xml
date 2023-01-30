@@ -15,6 +15,7 @@
             <file>tests/PingTest.php</file>
             <file>tests/ContactTest.php</file>
             <file>tests/AppointmentTest.php</file>
+            <file>tests/AttachmentTest.php</file>
         </testsuite>
     </testsuites>
 
