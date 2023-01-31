@@ -19,6 +19,9 @@
             <file>tests/TransportTest.php</file>
             <file>tests/UserTest.php</file>
             <file>tests/NotificationTypeTest.php</file>
+            <file>tests/LetterOptionTest.php</file>
+            <file>tests/NotificationStatusTest.php</file>
+            <file>tests/SignatureRequestTest.php</file>
         </testsuite>
     </testsuites>
 

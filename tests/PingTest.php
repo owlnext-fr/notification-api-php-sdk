@@ -1,4 +1,4 @@
-<?php
+<?php var_dump($notificationStatus);
 
 use Impl\AbstractTestCase;
 

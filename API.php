@@ -6,7 +6,10 @@ use Owlnext\NotificationAPI\api\AppointmentEndpoint;
 use Owlnext\NotificationAPI\api\AttachmentEndpoint;
 use Owlnext\NotificationAPI\api\AuthenticationEndpoint;
 use Owlnext\NotificationAPI\api\ContactEndpoint;
+use Owlnext\NotificationAPI\api\LetterOptionEndpoint;
+use Owlnext\NotificationAPI\api\NotificationStatusEndpoint;
 use Owlnext\NotificationAPI\api\NotificationTypeEndpoint;
+use Owlnext\NotificationAPI\api\SignatureRequestEndpoint;
 use Owlnext\NotificationAPI\api\TestEndpoint;
 use Owlnext\NotificationAPI\api\TransportEndpoint;
 use Owlnext\NotificationAPI\api\UserEndpoint;
@@ -47,6 +50,9 @@ class API
     public TransportEndpoint $transports;
     public UserEndpoint $users;
     public NotificationTypeEndpoint $notificationTypes;
+    public NotificationStatusEndpoint $notificationStatus;
+    public LetterOptionEndpoint $letterOption;
+    public SignatureRequestEndpoint $signatureRequest;
 
     public function __construct(
         string|null $login = null,
@@ -86,6 +92,9 @@ class API
         $this->transports = new TransportEndpoint($this, $serializer);
         $this->users = new UserEndpoint($this, $serializer);
         $this->notificationTypes = new NotificationTypeEndpoint($this, $serializer);
+        $this->notificationStatus = new NotificationStatusEndpoint($this, $serializer);
+        $this->letterOption = new LetterOptionEndpoint($this, $serializer);
+        $this->signatureRequest = new SignatureRequestEndpoint($this, $serializer);
     }
 
     public function getLogin(): string
@@ -134,8 +143,8 @@ class API
             $headers['Authorization'] = sprintf("Bearer %s", $this->jwt->token);
         }
 
-        var_dump($method, $path, $queryParams, $body, $headers);
-        ob_flush();
+//        var_dump($method, $path, $queryParams, $body, $headers);
+//        ob_flush();
 
         $response = $this->client->executeRequest(
             $method,
@@ -154,8 +163,8 @@ class API
             throw new HttpException($response->getContent(false), $statusCode);
         }
 
-        //var_dump(json_decode($response->getContent(false), true));
-        //ob_flush();
+//        var_dump(json_decode($response->getContent(false), true));
+//        ob_flush();
 
         return $response->getContent();
     }
