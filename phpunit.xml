@@ -17,6 +17,8 @@
             <file>tests/AppointmentTest.php</file>
             <file>tests/AttachmentTest.php</file>
             <file>tests/TransportTest.php</file>
+            <file>tests/UserTest.php</file>
+            <file>tests/NotificationTypeTest.php</file>
         </testsuite>
     </testsuites>
 

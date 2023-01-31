@@ -6,8 +6,10 @@ use Owlnext\NotificationAPI\api\AppointmentEndpoint;
 use Owlnext\NotificationAPI\api\AttachmentEndpoint;
 use Owlnext\NotificationAPI\api\AuthenticationEndpoint;
 use Owlnext\NotificationAPI\api\ContactEndpoint;
+use Owlnext\NotificationAPI\api\NotificationTypeEndpoint;
 use Owlnext\NotificationAPI\api\TestEndpoint;
 use Owlnext\NotificationAPI\api\TransportEndpoint;
+use Owlnext\NotificationAPI\api\UserEndpoint;
 use Owlnext\NotificationAPI\client\Client;
 use Owlnext\NotificationAPI\Exception\ConfigurationException;
 use Owlnext\NotificationAPI\Exception\HttpException;
@@ -43,6 +45,8 @@ class API
     public AttachmentEndpoint $attachments;
 
     public TransportEndpoint $transports;
+    public UserEndpoint $users;
+    public NotificationTypeEndpoint $notificationTypes;
 
     public function __construct(
         string|null $login = null,
@@ -80,6 +84,8 @@ class API
         $this->appointments = new AppointmentEndpoint($this, $serializer);
         $this->attachments = new AttachmentEndpoint($this, $serializer);
         $this->transports = new TransportEndpoint($this, $serializer);
+        $this->users = new UserEndpoint($this, $serializer);
+        $this->notificationTypes = new NotificationTypeEndpoint($this, $serializer);
     }
 
     public function getLogin(): string
@@ -128,8 +134,8 @@ class API
             $headers['Authorization'] = sprintf("Bearer %s", $this->jwt->token);
         }
 
-        //var_dump($method, $path, $queryParams, $body, $headers);
-        //ob_flush();
+        var_dump($method, $path, $queryParams, $body, $headers);
+        ob_flush();
 
         $response = $this->client->executeRequest(
             $method,

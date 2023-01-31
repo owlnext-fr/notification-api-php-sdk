@@ -3,22 +3,22 @@
 namespace Owlnext\NotificationAPI\api;
 
 use Owlnext\NotificationAPI\api\Impl\AbstractEndpoint;
-use Owlnext\NotificationAPI\bean\Transport\TransportDetails;
+use Owlnext\NotificationAPI\bean\User\UserDetails;
 use Owlnext\NotificationAPI\utils\ListIterator;
 
-class TransportEndpoint extends AbstractEndpoint
+class UserEndpoint extends AbstractEndpoint
 {
     public function all(array $params = []): ListIterator
     {
         return parent::all($params);
     }
 
-    public function get(string $id): TransportDetails
+    public function get(string $id): UserDetails
     {
         return parent::get($id);
     }
 
-    public function create(array $payload): TransportDetails
+    public function create(array $payload): UserDetails
     {
         return parent::create($payload);
     }

@@ -7,6 +7,7 @@ use Owlnext\NotificationAPI\client\Method;
 use Owlnext\NotificationAPI\utils\Constants;
 use Owlnext\NotificationAPI\utils\ListIterator;
 use Owlnext\NotificationAPI\utils\Serializer;
+use Symfony\Component\String\UnicodeString;
 
 class AbstractEndpoint
 {
@@ -89,7 +90,7 @@ class AbstractEndpoint
     protected function mergeListParams(array $params): array
     {
         $queryParams = [
-            'page'         => array_key_exists('page', $params) ? $params['page'] : Constants::PARAM_PAGE,
+            'page' => array_key_exists('page', $params) ? $params['page'] : Constants::PARAM_PAGE,
             'itemsPerPage' => array_key_exists('itemsPerPage',
                 $params) ? $params['itemsPerPage'] : Constants::PARAM_PER_PAGE,
         ];
@@ -99,17 +100,21 @@ class AbstractEndpoint
 
     protected function deriveListRouteName(): string
     {
+        $routePart = (new UnicodeString($this->deriveCallingClassName()))->snake();
+
         return sprintf(
             "%s_list",
-            strtolower($this->deriveCallingClassName())
+            strtolower($routePart)
         );
     }
 
     protected function deriveDetailsRouteName(): string
     {
+        $routePart = (new UnicodeString($this->deriveCallingClassName()))->snake();
+
         return sprintf(
             "%s_details",
-            strtolower($this->deriveCallingClassName())
+            strtolower($routePart)
         );
     }
 

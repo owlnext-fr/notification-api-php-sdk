@@ -21,7 +21,8 @@
     "ext-mbstring": "*",
     "symfony/http-client": "^6.2",
     "symfony/serializer": "^6.2",
-    "symfony/property-access": "^6.2"
+    "symfony/property-access": "^6.2",
+    "symfony/string": "^6.2"
   },
   "autoload": {
     "psr-4": {
