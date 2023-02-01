@@ -38,5 +38,9 @@ final class Routes
     public final const LETTER_OPTION_DETAILS = '/api/letter-option/{id}';
     public final const SIGNATURE_REQUEST_LIST = '/api/signature-requests';
     public final const SIGNATURE_REQUEST_DETAILS = '/api/signature-requests/{id}';
+    public final const NOTIFICATION_LIST = '/api/notifications';
+    public final const NOTIFICATION_DETAILS = '/api/notifications/{id}';
+    public final const NOTIFICATION_DETAILS_LAST_STATUS = '/api/notifications/{id}/last_status';
+    public final const NOTIFICATION_LIST_STATUS_HISTORIES = '/api/notifications/{id}/status_histories';
 
 }

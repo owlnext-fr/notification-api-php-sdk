@@ -22,6 +22,7 @@
             <file>tests/LetterOptionTest.php</file>
             <file>tests/NotificationStatusTest.php</file>
             <file>tests/SignatureRequestTest.php</file>
+            <file>tests/NotificationTest.php</file>
         </testsuite>
     </testsuites>
 

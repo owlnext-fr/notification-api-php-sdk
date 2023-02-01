@@ -7,6 +7,7 @@ use Owlnext\NotificationAPI\api\AttachmentEndpoint;
 use Owlnext\NotificationAPI\api\AuthenticationEndpoint;
 use Owlnext\NotificationAPI\api\ContactEndpoint;
 use Owlnext\NotificationAPI\api\LetterOptionEndpoint;
+use Owlnext\NotificationAPI\api\NotificationEndpoint;
 use Owlnext\NotificationAPI\api\NotificationStatusEndpoint;
 use Owlnext\NotificationAPI\api\NotificationTypeEndpoint;
 use Owlnext\NotificationAPI\api\SignatureRequestEndpoint;
@@ -51,6 +52,7 @@ class API
     public UserEndpoint $users;
     public NotificationTypeEndpoint $notificationTypes;
     public NotificationStatusEndpoint $notificationStatus;
+    public NotificationEndpoint $notifications;
     public LetterOptionEndpoint $letterOption;
     public SignatureRequestEndpoint $signatureRequest;
 
@@ -93,6 +95,7 @@ class API
         $this->users = new UserEndpoint($this, $serializer);
         $this->notificationTypes = new NotificationTypeEndpoint($this, $serializer);
         $this->notificationStatus = new NotificationStatusEndpoint($this, $serializer);
+        $this->notifications = new NotificationEndpoint($this, $serializer);
         $this->letterOption = new LetterOptionEndpoint($this, $serializer);
         $this->signatureRequest = new SignatureRequestEndpoint($this, $serializer);
     }
@@ -143,8 +146,8 @@ class API
             $headers['Authorization'] = sprintf("Bearer %s", $this->jwt->token);
         }
 
-//        var_dump($method, $path, $queryParams, $body, $headers);
-//        ob_flush();
+        var_dump($method, $path, $queryParams, $body, $headers);
+        ob_flush();
 
         $response = $this->client->executeRequest(
             $method,
